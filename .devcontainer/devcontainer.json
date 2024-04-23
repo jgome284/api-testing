@@ -47,6 +47,8 @@
 				"eamodio.gitlens",
 				// Launch a development local Server with live reload feature for static & dynamic pages
 				"ritwickdey.LiveServer",
+				// Rest api client
+				"rangav.vscode-thunder-client",
 
 				/*------------------------------------------------------------------------
 				----------------------------OTHER UTILITIES-------------------------------
