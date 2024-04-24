@@ -26,8 +26,12 @@ app.get('/expressions', (req, res, next) => {
 });
 
 app.get("/expressions/:id", (req, res) => {
-    const expression = getElementById(req.params.id, expressions);
-    res.send(expression);
+    const foundExpression = getElementById(req.params.id, expressions);
+    if (foundExpression) {
+        res.send(foundExpression);
+    } else {
+        res.status(404).send(`Emoji Id #${req.params.id} was not found 😞`);
+    }
   });
 
 app.listen(PORT, () => {
