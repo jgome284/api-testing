@@ -2,12 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { initDB } = require('../../data/db');
 
-const app = express();
-app.use(bodyParser.json());
+const usersRouter = express.Router();
+usersRouter.use(bodyParser.json());
 
 const db = initDB();
 
-app.get("/users", (req, res) => {
+usersRouter.get("/", (req, res) => {
     db.all("SELECT * FROM users", [], (err, rows) => {
         if (err) {
             res.status(500).json({"error": err.message});
@@ -17,7 +17,7 @@ app.get("/users", (req, res) => {
     });
 });
 
-app.get("/users/:id", (req, res) => {
+usersRouter.get("/:id", (req, res) => {
     const { id } = req.params;
     db.all("SELECT * FROM users where id is (?)", [id], (err, rows) => {
         if (err) {
@@ -30,7 +30,7 @@ app.get("/users/:id", (req, res) => {
     })
 });
 
-app.post("/users", (req, res) => {
+usersRouter.post("/", (req, res) => {
     const { user: { username, password} } = req.body;
     const insertStmt = "INSERT INTO users(username,password) VALUES (?,?)";
     db.run(insertStmt, [username, password], function(err, result) {
@@ -46,4 +46,4 @@ app.post("/users", (req, res) => {
     })
 });
 
-app.listen(4000, () => console.log("Simple server running on http://localhost:4000"))
+module.exports = usersRouter;

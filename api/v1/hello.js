@@ -1,12 +1,10 @@
-/* server that responds with static html */
+/* hello endpoint for static html */
 
 const express = require('express');
-const app = express();
+const helloRouter = express.Router()
   
-app.get('/', (req, res) => {
+helloRouter.get('/', (req, res) => {
   res.send('<h1>Hello from Express! 🚀</h1>');
 });
   
-app.listen(8000, () => {
-  console.log('Server listening on port 8000');
-});
+module.exports = helloRouter;

@@ -1,9 +1,9 @@
 /* 
-Sample server that responds with emoji data.
+Endpoint for emoji data.
 */
 
 const express = require('express');
-const app = express();
+const expressionsRouter = express.Router();
 
 const {
     getElementById,
@@ -12,8 +12,6 @@ const {
     createElement,
   } = require("../utils");
 
-const PORT = process.env.PORT || 4001;
-
 const expressions = [
     {'id': 1, 'emoji': '😀', 'name': 'happy'},
     {'id': 2, 'emoji': '😎', 'name': 'shades'},
@@ -21,12 +19,12 @@ const expressions = [
 ];
 
 // Get all expressions
-app.get('/expressions', (req, res, next) => {
+expressionsRouter.get('/', (req, res, next) => {
   // console.log(req);
   res.send(expressions)
 });
 
-app.get("/expressions/:id", (req, res) => {
+expressionsRouter.get("/:id", (req, res) => {
     const foundExpression = getElementById(req.params.id, expressions);
     if (foundExpression) {
         res.send(foundExpression);
@@ -35,7 +33,7 @@ app.get("/expressions/:id", (req, res) => {
     }
   });
 
-app.put("/expressions/:id", (req, res, next) => {
+expressionsRouter.put("/:id", (req, res, next) => {
   const expressionIndex = getIndexById(req.params.id, expressions);
   if (expressionIndex > -1) {
     updateElement(req.params.id, req.query, expressions);
@@ -47,7 +45,7 @@ app.put("/expressions/:id", (req, res, next) => {
 });
 
 
-app.post("/expressions", (req, res, next) => {
+expressionsRouter.post("/", (req, res, next) => {
     const newExpression = createElement(req.query);
     if (newExpression) {
       expressions.push(newExpression);
@@ -57,7 +55,7 @@ app.post("/expressions", (req, res, next) => {
     }
   });
 
-app.delete("/expressions/:id", (req, res, next) => {
+expressionsRouter.delete("/:id", (req, res, next) => {
   const expressionIndex = getIndexById(req.params.id, expressions);
   if (expressionIndex !== -1) {
     expressions.splice(expressionIndex, 1);
@@ -67,6 +65,4 @@ app.delete("/expressions/:id", (req, res, next) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+module.exports = expressionsRouter;
