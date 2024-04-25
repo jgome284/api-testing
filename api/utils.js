@@ -12,12 +12,6 @@ const updateElement = (id, queryArguments, elementList) => {
     return elementList[elementIndex];
   };
 
-const getElementById = (id, elementList) => {
-    return elementList.find((element) => {
-      return element.id === Number(id);
-    });
-  };
-
 const getIndexById = (id, elementList) => {
   return elementList.findIndex((element) => {
     return element.id === Number(id);
@@ -41,7 +35,6 @@ const createElement = (queryArguments) => {
 
 module.exports = {
   getIndexById: getIndexById,
-  getElementById: getElementById,
   updateElement: updateElement,
   createElement: createElement,
 };
