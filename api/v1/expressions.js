@@ -6,7 +6,6 @@ const express = require('express');
 const expressionsRouter = express.Router();
 
 const {
-    getElementById,
     getIndexById,
     updateElement,
     createElement,
@@ -25,9 +24,9 @@ expressionsRouter.get('/', (req, res, next) => {
 });
 
 expressionsRouter.get("/:id", (req, res) => {
-    const foundExpression = getElementById(req.params.id, expressions);
-    if (foundExpression) {
-        res.send(foundExpression);
+    const expressionIndex = getIndexById(req.params.id, expressions);
+    if (expressionIndex > -1) {
+        res.send(expressions[expressionIndex]);
     } else {
         res.status(404).send(`There is no Emoji Id #${req.params.id} to get! 😞`);
     }
