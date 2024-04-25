@@ -5,6 +5,10 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.static('public'));
 
+// Logging Middleware
+const morgan = require('morgan')
+app.use(morgan('dev'));
+
 // Import and mount the expressionsRouter
 const expressionsRouter = require('./api/v1/expressions.js');
 app.use('/expressions', expressionsRouter);
