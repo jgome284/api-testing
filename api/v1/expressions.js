@@ -10,7 +10,7 @@ const {
     getIndexById,
     updateElement,
     createElement,
-  } = require("./utils");
+  } = require("../utils");
 
 const PORT = process.env.PORT || 4001;
 
