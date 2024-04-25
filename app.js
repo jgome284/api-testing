@@ -19,6 +19,9 @@ app.use('/hello', helloRouter);
 const usersRouter = require('./api/v1/users.js');
 app.use('/users', usersRouter);
 
+// Error handling middleware
+const errorhandler = require('errorhandler')
+app.use(errorhandler())
 
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);
