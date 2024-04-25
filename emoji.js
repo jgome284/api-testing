@@ -9,6 +9,7 @@ const {
     getElementById,
     getIndexById,
     updateElement,
+    createElement,
   } = require("./utils");
 
 const PORT = process.env.PORT || 4001;
@@ -44,6 +45,17 @@ app.put("/expressions/:id", (req, res, next) => {
     res.status(404).send(`There is no emoji Id #${req.params.id} to update! 🫢`)
   }
 });
+
+
+app.post("/expressions", (req, res, next) => {
+    const newExpression = createElement(req.query);
+    if (newExpression) {
+      expressions.push(newExpression);
+      res.status(201).send(newExpression);
+    } else {
+      res.status(400).send();
+    }
+  });
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

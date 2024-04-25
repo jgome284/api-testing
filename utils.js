@@ -1,3 +1,5 @@
+let expressionIdCounter = 3
+
 const updateElement = (id, queryArguments, elementList) => {
     const elementIndex = getIndexById(id, elementList);
     if (elementIndex === -1) {
@@ -22,9 +24,24 @@ const getIndexById = (id, elementList) => {
   });
 };
   
+const createElement = (queryArguments) => {
+  if (queryArguments.hasOwnProperty('emoji') &&
+      queryArguments.hasOwnProperty('name')) {
+    expressionIdCounter += 1;
+    let currentId = expressionIdCounter;
+    return {
+      'id':    currentId,
+      'emoji': queryArguments.emoji,
+      'name':  queryArguments.name,
+    };
+  } else {
+    return false;
+  }
+};
 
 module.exports = {
   getIndexById: getIndexById,
   getElementById: getElementById,
   updateElement: updateElement,
+  createElement: createElement,
 };
