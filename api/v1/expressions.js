@@ -19,28 +19,32 @@ const expressions = [
 
 // Get all expressions
 expressionsRouter.get('/', (req, res, next) => {
-  // console.log(req);
   res.send(expressions)
 });
 
+expressionsRouter.param('id', (req, res, next, id) => {
+  let expressionId = Number(id);
+  try {
+    const expressionIndex = getIndexById(expressionId, expressions);
+      if (expressionIndex > -1) {
+          req.index = expressionIndex
+          req.id = expressionId
+          next()
+      } else {
+          res.status(404).send(`Emoji Id #${id} was not found 😞`);
+      }
+  } catch (error) {
+    next(err)    
+  }
+})
+
 expressionsRouter.get("/:id", (req, res) => {
-    const expressionIndex = getIndexById(req.params.id, expressions);
-    if (expressionIndex > -1) {
-        res.send(expressions[expressionIndex]);
-    } else {
-        res.status(404).send(`There is no Emoji Id #${req.params.id} to get! 😞`);
-    }
+    res.send(expressions[req.index]);
   });
 
 expressionsRouter.put("/:id", (req, res, next) => {
-  const expressionIndex = getIndexById(req.params.id, expressions);
-  if (expressionIndex > -1) {
-    updateElement(req.params.id, req.query, expressions);
-    res.send(expressions[expressionIndex])
-  }
-  else {
-    res.status(404).send(`There is no emoji Id #${req.params.id} to update! 🫢`)
-  }
+    updateElement(req.id, req.query, expressions);
+    res.send(expressions[req.index])
 });
 
 
@@ -55,13 +59,8 @@ expressionsRouter.post("/", (req, res, next) => {
   });
 
 expressionsRouter.delete("/:id", (req, res, next) => {
-  const expressionIndex = getIndexById(req.params.id, expressions);
-  if (expressionIndex !== -1) {
-    expressions.splice(expressionIndex, 1);
-    res.status(204).send(expressions[expressionIndex]);
-  } else {
-    res.status(404).send(`There is no emoji Id #${req.params.id} to delete 😒`);
-  }
+    expressions.splice(req.index, 1);
+    res.status(204).send(expressions[req.index]);
 });
 
 module.exports = expressionsRouter;
