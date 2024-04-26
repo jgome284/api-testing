@@ -47,7 +47,7 @@ If successful, you should see a static site deployed at the root on `localhost:4
 **GET** - get static hello page
 > curl localhost:4000/hello
 
-**Note:** A 🍪 is set at this endpoint which provides a snapshot of the amount of page views made to this route. The session cookie is set to expires at 1 minute of inactivity. A new Set-Cookie header is sent on every GET request to this endpoint that extends the session lifetime. Cool! 😎
+**Note:** A 🍪 is set at this endpoint which provides a snapshot of the amount of page views made to this route. The session cookie is set to expires at 1 minute of inactivity. A new Set-Cookie header is added on every GET request to this endpoint to extend the session lifetime. Cool! 😎
 
 ### **/users**
 
