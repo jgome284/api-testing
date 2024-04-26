@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+const cors = require('cors');
+
 const PORT = process.env.PORT || 4000;
 
 app.use(express.static('public'));
@@ -14,7 +16,7 @@ const expressionsRouter = require('./api/v1/expressions.js');
 app.use('/expressions', expressionsRouter);
 // Import and mount the helloRouter
 const helloRouter = require('./api/v1/hello.js');
-app.use('/hello', helloRouter);
+app.use('/hello', cors(), helloRouter);
 // Import and mount the usersRouter
 const usersRouter = require('./api/v1/users.js');
 app.use('/users', usersRouter);
