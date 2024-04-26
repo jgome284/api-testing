@@ -9,8 +9,7 @@ app.use(cookieSession({
   name: 'session',
   keys: new Keygrip(['key1', 'key2'], 'SHA384', 'base64'),
   // Cookie Options
-  maxAge: 60 * 1000, // Session expires after 1 minute of inactivity
-  httpOnly: false // cookie made available to client JavaScript
+  maxAge: 60 * 1000 // Session expires after 1 minute of inactivity
 }))
 
 // Deploy site at root
